@@ -31,7 +31,7 @@ var DATA_WHEN_PRESSED = 26;
 
 var argv = yargs
   .usage('$0 [options] COMMAND [args..]')
-  .epilog('When the button is pressed, PRESSED is printed to stdout and `COMMAND` is invoked with the given arguments, if present. When the button is released, RELEASED is printed to stdout')
+  .epilog('When the button is pressed, PRESSED is printed to stdout and `COMMAND` is invoked with the given arguments, if present. When the button is released, RELEASED is printed to stdout.')
 
   .describe('v', 'Device VID, hex')
   .alias('v', 'vid')

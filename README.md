@@ -5,7 +5,28 @@ Reverse-engineered from the official drivers. I found them here:
 `http://files.dreamcheeky.com.s3.amazonaws.com/uploads/dl/236/64_product_software_USB%20Smash%20Button%20v1.0.zip`
 
 ## Usage
-See -h flag.
+```
+$ node index.js -h
+index.js [options] COMMAND [args..]
+
+Options:
+  -v, --vid                   Device VID, hex       [string] [default: "0x1d34"]
+  -p, --pid                   Device PID, hex       [string] [default: "0x0008"]
+  -i, --poll-interval         Polling interval in milliseconds     [default: 15]
+  -t, --timeout               Protocol timeout for flaky devices in milliseconds
+                              (0 to disable)                      [default: 300]
+  -d, --detach-kernel-driver  Detach kernel driver first
+                                                       [boolean] [default: true]
+  -h                          Show help                                [boolean]
+
+When the button is pressed, PRESSED is printed to stdout and `COMMAND` is
+invoked with the given arguments, if present. When the button is released,
+RELEASED is printed to stdout.
+```
+
+Do you want to make Hulk trigger real keypresses? Maybe your COMMAND should be `xdotool key Return`: http://www.semicomplete.com/projects/xdotool/
+
+As a matter of fact, that's exactly how I've pushed this to github :)
 
 ## Setting up permissions
 By default raw USB devices are read-only for normal users. You could in theory run this script as root, but do you _really_ want to run some random script from the internet as root?
