@@ -9,8 +9,13 @@ Reverse-engineered from the official drivers. I found them here:
 Many thanks to this excellent reverse-engineering guide: http://www.linuxvoice.com/drive-it-yourself-usb-car-6/
 
 ## Usage
-Install NodeJS and NPM for your platform. Then:
+Install NodeJS and NPM for your platform. Then install some additional dependencies:
+```
+$ sudo apt-get install libudev-dev
+```
 
+Pick a permissions fix from Setting up permissions below. Finally:
+  
 ```
 $ sudo npm install -g hulk-button
 $ hulk-button -h
