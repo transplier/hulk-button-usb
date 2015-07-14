@@ -1,12 +1,13 @@
 {
-  "name": "hulk_smash",
+  "name": "hulk-button",
   "version": "1.0.0",
-  "description": "USB Hulk Button driver",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "description": "Dream Cheeky USB Hulk Button driver script",
+  "repository": "progman32/hulk-button-usb",
+  "preferGlobal": true,
+  "bin": {
+    "hulk-button": "index.js"
   },
-  "author": "",
+  "author": "Giacomo Ferrari <g@giferrari.net>",
   "license": "GPL-3.0",
   "dependencies": {
     "usb": "^1.0.6",

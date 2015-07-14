@@ -1,3 +1,5 @@
+#! /usr/bin/env/node
+
 /*
  * Hulk Button - Interfaces with 'Dream Cheeky' USB buttons.
  *
