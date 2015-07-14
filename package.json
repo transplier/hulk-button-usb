@@ -1,0 +1,14 @@
+{
+  "name": "hulk_smash",
+  "version": "1.0.0",
+  "description": "USB Hulk Button driver",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "usb": "^1.0.6"
+  }
+}
