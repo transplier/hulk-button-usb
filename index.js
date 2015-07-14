@@ -27,7 +27,7 @@ if (button) {
     var interface = button.interface(0);
     if (interface.endpoints.length !== 1) {
       // Maybe try to figure out which interface we care about?
-      throw new Error('Expected a single USB interface, but foun: ' + interface.endpoints.length);
+      throw new Error('Expected a single USB interface, but found: ' + interface.endpoints.length);
     } else {
       if (interface.isKernelDriverActive()) {
         console.log('Kernel driver active, detaching it.');
@@ -36,6 +36,8 @@ if (button) {
       interface.claim();
       var endpointAddress = interface.endpoints[0].address;
       var endpoint = interface.endpoint(endpointAddress);
+
+      endpoint.timeout = 300;
 
       if (endpoint.direction !== 'in') {
         throw new Error('Expected endpoint direction `in`, was `' + endpoint.direction + '`');
@@ -51,10 +53,16 @@ if (button) {
 
             endpoint.transfer(8, function(error, data) {
               if (error) {
-                throw new Error(error);
+                if (error.errno === usb.LIBUSB_TRANSFER_TIMED_OUT) {
+                  process.stdout.write('!! ');
+                  setTimeout(poll, 2);
+                } else {
+                  throw new Error(error);
+                }
+              } else {
+                process.stdout.write(data[0] + ' ');
+                setTimeout(poll, 2);
               }
-              process.stdout.write(data[0] + ' ');
-              setTimeout(poll, 200);
             });
           });
         }
