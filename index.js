@@ -18,8 +18,10 @@
 var usb = require('usb');
 var yargs = require('yargs');
 
-var EXIT_CODE_BUTTON_NOT_FOUND = 1; // Device not present. Check pid/vid?
-var EXIT_CODE_KERNEL_DRIVER_PRESENT = 2; // Driver attached, but -d used.
+// In addition to node errors: https://github.com/joyent/node/blob/master/doc/api/process.markdown#exit-codes
+var EXIT_CODE_BUTTON_NOT_FOUND = 30; // Device not present. Check pid/vid?
+var EXIT_CODE_KERNEL_DRIVER_PRESENT = 31; // Driver attached, but -d used.
+var EXIT_CODE_ACCESS_DENIED = 32;
 
 var argv = yargs
 
@@ -71,7 +73,16 @@ var button = usb.findByIds(vid, pid);
 
 if (button) {
   console.log('Found button at vid, pid: 0x' + vid.toString(16) + ', 0x' + pid.toString(16));
-  button.open();
+
+  try {
+    button.open();
+  } catch (e) {
+    if (e.errnum === usb.LIBUSB_ERROR_ACCESS) {
+      console.error('Access denied, you probably need to define a udev rule for your device. Check README for advice.');
+      process.exit(EXIT_CODE_ACCESS_DENIED);
+    }
+  }
+
   if (button.interfaces.length !== 1) {
     // Maybe try to figure out which interface we care about?
     throw new Error('Expected a single USB interface, but found ' + button.interfaces.length);
