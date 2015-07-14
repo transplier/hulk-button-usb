@@ -33,6 +33,7 @@ By default raw USB devices are read-only for normal users. You could in theory r
 
 ### The hack way
 You can manually chmod the device node for testing purposes. This won't persist across device unplugs or machine reboots.
+
 1. Find the device bus and device ID with `lsusb`:
   ```
   $ lsusb
