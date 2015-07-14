@@ -16,6 +16,7 @@
  * Usage: Use the -h flag.
  */
 var usb = require('usb');
+var spawn = require('child_process').spawn;
 var yargs = require('yargs');
 
 // In addition to node errors: https://github.com/joyent/node/blob/master/doc/api/process.markdown#exit-codes
@@ -23,7 +24,14 @@ var EXIT_CODE_BUTTON_NOT_FOUND = 30; // Device not present. Check pid/vid?
 var EXIT_CODE_KERNEL_DRIVER_PRESENT = 31; // Driver attached, but -d used.
 var EXIT_CODE_ACCESS_DENIED = 32;
 
+// The button gives us this in the first
+// data byte when the button is pressed
+// (27 when not pressed, but we don't care).
+var DATA_WHEN_PRESSED = 26;
+
 var argv = yargs
+  .usage('$0 [options] COMMAND [args..]')
+  .epilog('When the button is pressed, PRESSED is printed to stdout and `COMMAND` is invoked with the given arguments, if present. When the button is released, RELEASED is printed to stdout')
 
   .describe('v', 'Device VID, hex')
   .alias('v', 'vid')
@@ -124,6 +132,8 @@ if (button) {
         var wIndex = 0x0;
         var transferBytes = 8;
 
+        var currentlyPressed = false;
+
         function poll() {
 
           // Cause the button to read its state.
@@ -141,13 +151,21 @@ if (button) {
               endpoint.transfer(transferBytes, function(error, data) {
                 if (error) {
                   if (error.errno === usb.LIBUSB_TRANSFER_TIMED_OUT) {
-                    process.stdout.write('!! ');
                     setTimeout(poll, argv.i);
                   } else {
                     throw new Error(error);
                   }
                 } else {
-                  process.stdout.write(data[0] + ' ');
+                  var isPressedNow = data[0] === DATA_WHEN_PRESSED;
+                  if (isPressedNow !== currentlyPressed) {
+                    currentlyPressed = isPressedNow;
+                    if (isPressedNow) {
+                      console.log('PRESSED');
+                      launchCommand();
+                    } else {
+                      console.log('RELEASED');
+                    }
+                  }
                   setTimeout(poll, argv.i);
                 }
               });
@@ -162,4 +180,16 @@ if (button) {
 } else {
   console.log('Could not find button.');
   process.exit(EXIT_CODE_BUTTON_NOT_FOUND);
+}
+
+function launchCommand() {
+  if (argv._.length > 0) {
+    spawn(
+      argv._[0],
+      argv._.slice(1),
+      {
+        stdio: 'inherit'
+      }
+    );
+  }
 }
