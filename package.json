@@ -1,6 +1,6 @@
 {
   "name": "hulk-button",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Dream Cheeky USB Hulk Button driver script",
   "repository": "progman32/hulk-button-usb",
   "preferGlobal": true,
