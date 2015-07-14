@@ -14,7 +14,10 @@ if (button) {
       // Maybe try to figure out which interface we care about?
       throw new Error('Expected a single USB interface, but foun: ' + interface.endpoints.length);
     } else {
-      //interface.detachKernelDriver();
+      if (interface.isKernelDriverActive()) {
+        console.log('Kernel driver active, detaching it.');
+        interface.detachKernelDriver();
+      }
       interface.claim();
       var endpointAddress = interface.endpoints[0].address;
       var endpoint = interface.endpoint(endpointAddress);
