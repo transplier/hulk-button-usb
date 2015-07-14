@@ -1,3 +1,18 @@
+/*
+ * Hulk Button - Interfaces with 'Dream Cheeky' USB buttons.
+ *
+ * Much inspiration was taken from these excellent USB reverse-engineering resources:
+ *
+ * A guide to reverse-engineering a USB car:
+ * http://www.linuxvoice.com/drive-it-yourself-usb-car-6/
+ *
+ * USB Made Simple:
+ * http://www.usbmadesimple.co.uk
+ *
+ * node-usb:
+ * https://github.com/nonolith/node-usb
+ *
+ */
 var usb = require('usb');
 
 var button = usb.findByIds(0x1d34, 0x0008);
