@@ -1,6 +1,9 @@
 # Hulk Button
 Linux driver script for Dream Cheeky's USB Hulk Button. Could also work for the Iron Man and Spider-Man variants (let me know!).
 
+Reverse-engineered from the official drivers. I found them here:
+`http://files.dreamcheeky.com.s3.amazonaws.com/uploads/dl/236/64_product_software_USB%20Smash%20Button%20v1.0.zip`
+
 ## Usage
 See -h flag.
 
@@ -49,3 +52,17 @@ Create a udev rule that automatically assigns permissions. This will persist acr
 4. Re-plug the Hulk, re-login (if you modified your groups).
 5. Gamma rays?
 6. PROFIT
+
+## Greetz
+
+Much inspiration was taken from these excellent USB reverse-engineering resources:
+
+A guide to reverse-engineering a USB car:
+http://www.linuxvoice.com/drive-it-yourself-usb-car-6/
+
+USB Made Simple:
+http://www.usbmadesimple.co.uk
+
+node-usb:
+https://github.com/nonolith/node-usb
+
