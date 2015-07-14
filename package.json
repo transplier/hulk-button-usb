@@ -9,6 +9,7 @@
   "author": "",
   "license": "GPL-3.0",
   "dependencies": {
-    "usb": "^1.0.6"
+    "usb": "^1.0.6",
+    "yargs": "^3.15.0"
   }
 }
