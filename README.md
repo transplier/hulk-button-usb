@@ -1,13 +1,20 @@
 # Hulk Button
 Linux driver script for Dream Cheeky's USB Hulk Button. Could also work for the Iron Man and Spider-Man variants (let me know!).
 
+Video demonstration/reverse-engineering steps: http://youtu.be/PWEKVPpeZXY
+
 Reverse-engineered from the official drivers. I found them here:
 `http://files.dreamcheeky.com.s3.amazonaws.com/uploads/dl/236/64_product_software_USB%20Smash%20Button%20v1.0.zip`
 
+Many thanks to this excellent reverse-engineering guide: http://www.linuxvoice.com/drive-it-yourself-usb-car-6/
+
 ## Usage
+Install NodeJS and NPM for your platform. Then:
+
 ```
-$ node index.js -h
-index.js [options] COMMAND [args..]
+$ sudo npm install -g hulk-button
+$ hulk-button -h
+hulk-button [options] COMMAND [args..]
 
 Options:
   -v, --vid                   Device VID, hex       [string] [default: "0x1d34"]
